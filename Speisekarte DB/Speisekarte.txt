@@ -1,0 +1,10 @@
+ID	Name	Portion	Preis (in €)	Kategorie	Beschreibung
+1	Diverse Salate	klein	3.00	Salate & Vorspeisen	gemischter Salat ohne Sahne
+2	Diverse Salate	groß	7.00	Salate & Vorspeisen	Bowl gemischter Salat
+3	Sahne Salate	klein	3.50	Salate & Vorspeisen	Sahne Salat nach Wahl
+4	Schlag Zaziki	Schlag	2.00	Salate & Vorspeisen	Ein Löffel Zaziki
+5	Zaziki	klein	4.00	Salate & Vorspeisen	Ein volles Schälchen
+6	Peperoni	klein	3.00	Salate & Vorspeisen	Ein volles Schälchen
+7	Bauernsalat	klein	3.80	Salate & Vorspeisen	Schälchen Tomate, Gurke, Zwiebel, Weißkäse, Peperoni
+8	Bauernsalat	mittel	6.00	Salate & Vorspeisen	mit. Schale Tomate, Gurke, Zwiebel, Weißkäse, Peperoni
+9	Bauernsalat	groß	8.80	Salate & Vorspeisen	Bowl Tomate, Gurke, Zwiebel, Weißkäse, Peperoni
