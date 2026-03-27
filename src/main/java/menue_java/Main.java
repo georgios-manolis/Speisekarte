@@ -12,12 +12,11 @@ public class Main {
         InputStream readMenue = Main.class
                 .getClassLoader()
                 .getResourceAsStream("data/Speisekarte.txt");
-        //Übersetze eingelesene Daten...
+        //lies die erste Zeile und übersetze die Daten
         BufferedReader translate = new BufferedReader(new InputStreamReader(readMenue));
-        //zeige Kopfzeile ID, Gericht, etc. an
         outputMenue = translate.readLine();
 
-        //lies und übersetze so lange, bis keine zeile mehr da ist
+        //lies und übersetze so lange, bis keine Zeile mehr da ist
         while(outputMenue != null) {
             System.out.println(outputMenue);
             outputMenue = translate.readLine();
