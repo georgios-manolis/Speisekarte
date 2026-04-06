@@ -1,59 +1,26 @@
 package menu_java;
 
-import java.io.InputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     //starte Main
     public static void main(String[] args) throws Exception {
-        //Erstelle Array für alle Gerichte
-        ArrayList<Product> menu = new ArrayList<>();
+        //Methode zum Auslesen der Speiekarte
+        ArrayList<Product> menu = readMenu();
+        writeMenu(menu);
 
-        //lädt die Speisekarte aus dem resources Ordner
-        InputStream readMenu = Main.class
-                .getClassLoader()
-                .getResourceAsStream("data/Speisekarte.txt");
-        //Überprüft ob Speisekarte vorhanden ist. Wenn nicht gib Fehler zurück.
-        if (readMenu == null) {
-            System.out.println("keine Speisekarte gefunden");
-            return;
+        //Methode zum Einfügen von neuen Gerichten
+        Product newProduct = addProduct();
+        if(newProduct != null)
+        {
+            menu.add(newProduct);
         }
-        //Datei zeilenweise lesbar machen
-        BufferedReader reader = new BufferedReader(new InputStreamReader(readMenu));
-        //Erste Zeile der Textdatei enthält keine Zahl, sondern nur den Spaltenkopf. Wird mit einem readLine rausgefiltert.
-        reader.readLine();
-        //anschließend gelesene zeilen in inputMenu speichern
-        String inputMenu = reader.readLine();
-        System.out.println("Aktuelle Speisekarte:");
+        writeMenu(menu);
+    }
 
-        //lies und übersetze so lange, bis keine Zeile mehr da ist
-        while (inputMenu != null) {
-
-            //Einträge an den Tabs einteilen
-            String[] columns = inputMenu.split("\t");
-
-            //Spalten entprechned erstellen
-            int id = Integer.parseInt(columns[0]);
-            String productName = columns[1];
-            String portion = columns[2];
-            double price = Double.parseDouble(columns[3]);
-            String category = columns[4];
-            String description = columns[5];
-
-            //Object Meal erstellen
-            Product meal = new Product(id, productName, portion, price, category, description);
-            //und der ArrayList hinzufügen
-            menu.add(meal);
-
-            //Speisekarte ausgeben
-            System.out.println(meal);
-            //nächste Zeile auslesen
-            inputMenu = reader.readLine();
-        }
-        reader.close();
+    private static Product addProduct() {
         // Benutzereingabe vorbereiten
         Scanner scanner = new Scanner(System.in);
 
@@ -87,9 +54,63 @@ public class Main {
             Product newMeal = new Product(id, productName, portion, price, category, description);
 
             // zur Liste hinzufügen
-            menu.add(newMeal);
             System.out.println("Neues Gericht wurde hinzugefügt.");
-            System.out.println(menu);
+            return newMeal;
+        }
+        return null;
+    }
+
+    private static ArrayList<Product> readMenu() throws IOException {
+        //Erstelle Array für alle Gerichte
+        ArrayList<Product> menu = new ArrayList<>();
+
+        //lädt die Speisekarte aus dem resources Ordner
+        InputStream readMenu = Main.class
+                .getClassLoader()
+                .getResourceAsStream("data/Speisekarte.txt");
+        //Überprüft ob Speisekarte vorhanden ist. Wenn nicht gib Fehler zurück.
+        if (readMenu == null) {
+            System.out.println("keine Speisekarte gefunden");
+            return menu;
+        }
+        //Datei zeilenweise lesbar machen
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(readMenu))){
+
+            //Erste Zeile der Textdatei enthält keine Zahl, sondern nur den Spaltenkopf. Wird mit einem readLine rausgefiltert.
+            reader.readLine();
+            //anschließend gelesene zeilen in inputMenu speichern
+            String inputMenu = reader.readLine();
+            System.out.println("Aktuelle Speisekarte:");
+
+            //lies und übersetze so lange, bis keine Zeile mehr da ist
+            while (inputMenu != null) {
+
+                //Einträge an den Tabs einteilen
+                String[] columns = inputMenu.split("\t");
+
+                //Spalten entprechned erstellen
+                int id = Integer.parseInt(columns[0]);
+                String productName = columns[1];
+                String portion = columns[2];
+                double price = Double.parseDouble(columns[3]);
+                String category = columns[4];
+                String description = columns[5];
+
+                //Object Meal erstellen
+                Product meal = new Product(id, productName, portion, price, category, description);
+                //und der ArrayList hinzufügen
+                menu.add(meal);
+
+                //nächste Zeile auslesen und Speisekarte auslesen
+                inputMenu = reader.readLine();
+            }
+        }
+        return menu;
+    }
+
+    public static void writeMenu(ArrayList<Product> menu) {
+        for (Product product : menu){
+            System.out.println(product.toString());
         }
     }
 }
